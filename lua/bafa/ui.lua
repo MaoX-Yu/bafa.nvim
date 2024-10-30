@@ -85,6 +85,14 @@ function M.select_menu_item()
 end
 
 function M.delete_menu_item()
+  local function buf_delete(bufnr)
+    local ok, lazyvim = pcall(require, "lazyvim.util")
+    if ok then
+      lazyvim.ui.bufremove(bufnr)
+      return
+    end
+    vim.api.nvim_buf_delete(bufnr, { force = true })
+  end
   local choice = 1
   if BAFA_BUF_ID == nil or not vim.api.nvim_buf_is_valid(BAFA_BUF_ID) then
     return
@@ -102,11 +110,11 @@ function M.delete_menu_item()
   end
   if selected_line_number == 1 then
     close_window()
-    vim.api.nvim_buf_delete(selected_buffer.number, { force = true })
+    buf_delete(selected_buffer.number)
     M.toggle()
     return
   end
-  vim.api.nvim_buf_delete(selected_buffer.number, { force = true })
+  buf_delete(selected_buffer.number)
   vim.api.nvim_buf_set_lines(BAFA_BUF_ID, selected_line_number - 1, selected_line_number, false, {})
 end
 
