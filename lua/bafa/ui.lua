@@ -18,7 +18,7 @@ local function get_diagnostics(bufnr)
   for k, v in pairs(count) do
     local defined_sign = vim.fn.sign_getdefined("DiagnosticSign" .. DIAGNOSTICS_LABELS[k])
     local sign_icon = #defined_sign ~= 0 and defined_sign[1].text or DIAGNOSTICS_SIGNS[k]
-    table.insert(diags, { tostring(v) .. sign_icon, "DiagnosticSign" .. DIAGNOSTICS_LABELS[k] })
+    table.insert(diags, { sign_icon .. tostring(v), "DiagnosticSign" .. DIAGNOSTICS_LABELS[k] })
   end
   return diags
 end
