@@ -86,9 +86,9 @@ end
 
 function M.delete_menu_item()
   local function buf_delete(bufnr)
-    local ok, lazyvim = pcall(require, "lazyvim.util")
+    local ok, snacks = pcall(require, "snacks")
     if ok then
-      lazyvim.ui.bufremove(bufnr)
+      snacks.bufdelete(bufnr)
       return
     end
     vim.api.nvim_buf_delete(bufnr, { force = true })
@@ -149,7 +149,7 @@ local add_modified_highlight = function(idx, buffer)
   end
   local hl_name = "BafaModified"
   local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false })
-  local fg = "#ffff00"
+  local fg = "#eed49f"
   if #hl ~= 0 then
     fg = string.format("#%06x", hl.fg)
   end
